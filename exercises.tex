@@ -1,0 +1,204 @@
+% John Peloquin
+% Notes on Topology
+% Fall 2008
+\documentclass[letterpaper]{article}
+\usepackage{amsmath,amssymb,amsthm,fourier,enumitem}
+
+\newcommand{\exercise}[1]{\goodbreak\noindent\textsc{Exercise~{#1}.}}
+\newcommand{\note}{\goodbreak\noindent\textsc{Note.}}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\RL}{\R_l}
+\newcommand{\RK}{\R_K}
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\T}{\mathcal{T}}
+
+\newcommand{\sect}{\cap}
+\newcommand{\union}{\cup}
+\newcommand{\bigsect}{\bigcap}
+\newcommand{\bigunion}{\bigcup}
+
+\newcommand{\abs}[1]{|{#1}|}
+
+\title{Exercises and Notes from \emph{Topology}}
+\author{John Peloquin}
+\date{Fall 2008}
+
+\begin{document}
+\maketitle
+Exercises and notes from \emph{Topology} (2nd~ed.) by James~R. Munkres.
+\section*{Chapter~1}
+\subsection*{Section~3}
+\exercise{15} Assume the least upper bound property for~$\R$.
+\begin{enumerate}[itemsep=0pt]
+\item[(a)] The sets $[0,1]$ and $[0,1)$ have the least upper bound property.
+\begin{proof}
+Let $A$~be a nonempty subset of~$[0,1)$ which is bounded above in~$[0,1)$. Then there exists $0\le b<1$ such that for all $a\in A$, $a\le b$. Let $\beta$~be the least upper bound of~$A$ in~$\R$. Then $\beta\in[0,1)$ since $0\le a\le\beta\le b<1$ for any fixed $a\in A$. This shows that $[0,1)$ has the least upper bound property.
+
+The proof is nearly identical for $[0,1]$.
+\end{proof}
+\item[(b)] Under the dictionary order, the sets $[0,1]\times[0,1]$ and $[0,1)\times[0,1]$ have the least upper bound property, but the sets $[0,1]\times[0,1)$ and $[0,1)\times[0,1)$ do not.
+\begin{proof}
+To prove the latter claim, let
+$$A=\{\,(0,1-1/2^n)\mid n=0,1,\ldots\,\}\subseteq[0,1)\times[0,1)\subseteq[0,1]\times[0,1)$$
+Now $A$~is bounded above in both sets, since for example $(1/2,0)$ is an upper bound. Note that there is no upper bound with first coordinate~$0$. But also there is no \emph{least} upper bound with nonzero first coordinate, since for example
+$$B=\{\,(1/2^n,0)\mid n=1,2,\ldots\,\}$$
+is a set of upper bounds with arbitrarily small nonzero first coordinates. Thus it follows that there is no least upper bound for~$A$ in either set, so neither set has the least upper bound property.
+
+To prove the first claim, suppose $A$~is a nonempty subset of $[0,1)\times[0,1]$ which is bounded above (in either set). Let $\alpha$~be the least upper bound of the set of left coordinates of elements in~$A$. If the set $A\sect(\{\alpha\}\times[0,1])$ is nonempty, let $\beta$~be the least upper bound of right coordinates in this set; otherwise let $\beta=0$.
+
+We claim that $(\alpha,\beta)$ is a least upper bound for~$A$. Indeed, it is an upper bound since for all $(a,b)\in A$, $a\le\alpha$, and $b\le\beta$ if $a=\alpha$. Suppose now $(\gamma,\delta)<(\alpha,\beta)$. If $\gamma<\alpha$, then there exists $(a,b)\in A$ with $\gamma<a\le\alpha$, so $(\gamma,\delta)<(a,b)$ and hence $(\gamma,\delta)$ is not an upper bound for~$A$. If $\gamma=\alpha$, then we must have $0\le\delta<\beta$, which means (by definition of~$\beta$) there exists $(a,b)\in A$ with $a=\alpha$ and $\delta<b\le\beta$. But then $(\gamma,\delta)<(a,b)$ again, so $(\gamma,\delta)$ is not an upper bound for~$A$. These cases are exhaustive, hence $(\alpha,\beta)$ is the least upper bound for~$A$.
+\end{proof}
+\noindent Note that the latter argument fails for the second pair of sets in the problem, since for those sets $\beta$~is \emph{not} guaranteed to exist in $[0,1)$.
+\end{enumerate}
+
+\section*{Chapter~2}
+\subsection*{Section~13}
+\exercise{1}
+Let $X$~be a topological space. Suppose $A\subseteq X$ and for all $x\in A$ there exists an open set~$U$ with $x\in U\subseteq A$. Then $A$~is open.
+\begin{proof}
+For each $x\in A$ choose an open set~$U_x$ with $x\in U_x\subseteq A$. Then $A=\bigunion_{x\in A}U_x$ is a union of open sets, and hence is open.
+\end{proof}
+
+\exercise{3}
+Let $X$~be a set. Define the following collections:
+\begin{align*}
+\T_c&=\{\,U\subseteq X\mid X-U\text{ is countable or all of }X\,\}\\
+\T_{\infty}&=\{\,U\subseteq X\mid X-U\text{ is infinite or empty or all of }X\,\}
+\end{align*}
+Then $\T_c$~is a topology on~$X$, but $\T_{\infty}$~is not in general.
+\begin{proof}
+Let $\{U_{\alpha}\}$~be an indexed subcollection of~$\T_c$. Set $U=\bigunion U_{\alpha}$. If the subcollection is empty, so is~$U$, so $X-U=X$ and $U\in\T_c$. Otherwise fix~$\alpha$ and note that
+$$X-U=X-\bigunion U_{\alpha}=\bigsect(X-U_{\alpha})\subseteq X-U_{\alpha}$$
+which is countable since $X-U_{\alpha}$ is countable. Thus $U\in\T_c$.
+
+Now let $\{U_{\alpha}\}$ be finite and set $U=\bigsect U_{\alpha}$. Then $X-U=X-\bigsect U_{\alpha}=\bigunion(X-U_{\alpha})$ is a finite union of countable sets, which is countable, so $U\in\T_c$.
+
+Set $X=\R$, $U_{-1}=(-\infty,0)$ and $U_1=(0,\infty)$. Then $U_{-1}\in\T_{\infty}$ and $U_1\in T_{\infty}$ but
+$$U_{-1}\union U_1=(-\infty,0)\union(0,\infty)=\R-\{0\}\not\in\T_{\infty}$$
+Therefore $\T_{\infty}$~is not a topology on~$X$ in general.
+\end{proof}
+
+\exercise{4}
+\begin{enumerate}
+\item[(a)] Let $\{\T_{\alpha}\}$~be a family of topologies on~$X$. Then $\bigsect\T_{\alpha}$ is also a topology on~$X$, but $\bigunion\T_{\alpha}$ is not in general.
+\begin{proof}
+The first claim is immediate from the fact that each~$\T_{\alpha}$ is a topology. (Note if the family is empty, the intersection gives the discrete topology on~$X$.)
+
+To see that the union is not in general, set $X=\{a,b,c\}$ and define topologies
+$$\T_1=\{\emptyset,\{a\},X\}\qquad\T_2=\{\emptyset,\{b\},X\}$$
+Then $\T=\T_1\union\T_2$ is not a topology, as $\{a\},\{b\}\in\T$ but $\{a\}\union\{b\}=\{a,b\}\not\in\T$.
+\end{proof}
+
+\item[(b)] Let $\{T_{\alpha}\}$~be a family of topologies on~$X$. Then there exists a unique smallest topology on~$X$ containing all~$\T_{\alpha}$, and in addition a unique largest topology on~$X$ contained in all~$\T_{\alpha}$.
+\begin{proof}
+Let $\T$~be the topology generated by the subbasis $S=\bigunion\T_{\alpha}$. Then $\T$~is a topology on~$X$ containing all~$\T_{\alpha}$, and any topology on~$X$ containing all~$\T_{\alpha}$ must contain~$\T$ (since such a topology will be closed under unions of finite intersections over~$S$), so $\T$~is smallest and unique.
+
+It is immediate that $\bigsect T_{\alpha}$~is the largest topology on~$X$ contained in all~$\T_{\alpha}$.
+\end{proof}
+
+\item[(c)]
+Set $X=\{a,b,c\}$ and define the topologies
+$$\T_1=\{\emptyset,\{a\},\{a,b\},X\}\qquad\T_2=\{\emptyset,\{a\},\{b,c\},X\}$$
+The smallest topology containing both is $\{\emptyset,\{a\},\{b\},\{a,b\},\{b,c\},X\}$. The largest topology contained in both is $\{\emptyset,\{a\},X\}$.
+\end{enumerate}
+
+\exercise{5}
+Let $\A$~be a basis for a topology on~$X$. Then the topology generated by~$\A$ is equal to the intersection of all topologies on~$X$ containing~$\A$.
+\begin{proof}
+Both equal the unique smallest topology of~$X$ containing~$\A$.
+\end{proof}
+
+\exercise{6}
+The topologies $\RL$~and~$\RK$ are not comparable.
+\begin{proof}
+Note $0\in[0,1)$, but there are no $a<b$ with $0\in(a,b)-K\subseteq[0,1)$. It follows that $\RL\not\subseteq\RK$ (Lemma 13.3). Conversely, note that $0\in(-1,1)-K$, but there are no $a<b$ with $0\in [a,b)\subseteq(-1,1)-K$, so $\RK\not\subseteq\RL$.
+\end{proof}
+
+\exercise{8}
+\begin{enumerate}
+\item[(a)] Let $\B=\{\,(a,b)\mid a<b\text{ rationals}\,\}$. Then $\B$~is a countable basis generating the standard topology on~$\R$.
+\begin{proof}
+It is immediate that $\B$~is a countable collection of open sets. Note any interval $(r,s)$ with $r,s\in\R$ can be expressed as a union of elements of~$\B$ (since the rationals are dense in~$\R$), hence any open set can be expressed as a union of elements of~$\B$ (Lemma~13.1). Therefore $\B$~is a basis for the standard topology (Lemma~13.2).
+\end{proof}
+\item[(c)] Let $\C=\{\,[a,b)\mid a<b\text{ rationals}\,\}$. Then $\C$~is a basis for~$\R$ generating a topology different than~$\RL$.
+\begin{proof}
+It is immediate that $\C$~is a basis. Consider basis element $B=[\pi,\pi+1)$ in~$\RL$. Note $\pi\in B$, but there are no $a<b$ rational with $\pi\in[a,b)\subseteq[\pi,\pi+1)$, lest $a=\pi$ be irrational. Thus the topology generated by~$\C$ is different from~$\RL$.
+\end{proof}
+\end{enumerate}
+
+\subsection*{Section~16}
+\exercise{1}
+Let $Y$~be a subspace of the topological space~$X$ and $A\subseteq Y$. Then the topology $A$~inherits as a subspace of~$Y$ is the same as the topology $A$~inherits as a subspace of~$X$.
+\begin{proof}
+For the purposes of this proof, let $\T_{A,Z}$~denote the topology $A$~inherits as a subspace of the topological space~$Z$. Let $\T$~denote the topology of~$X$. Then
+\begin{align*}
+\T_{A,Y}&=\{\,U\sect A\mid U\in\T_{Y,X}\,\}&&\text{by definition}\\
+	&=\{\,(U\sect Y)\sect A\mid U\in\T\,\}&&\text{since }\T_{Y,X}=\{\,U\sect Y\mid U\in\T\,\}\\
+	&=\{\,U\sect A\mid U\in\T\,\}&&\text{since }A\subseteq Y\\
+	&=\T_{A,X}&&\text{by definition}
+\end{align*}
+This establishes the result.
+\end{proof}
+
+\exercise{2}
+Let $\T$~and~$\T'$ be topologies on~$X$ with $\T\subset\T'$, and suppose $Y\subseteq X$. Let $\T_Y$~and~$\T'_Y$ denote the corresponding subspace topologies on~$Y$. Then $\T_Y\subseteq\T'_Y$, but this inclusion need not be proper.
+\begin{proof}
+It is immediate from definitions that $\T_Y\subseteq\T'_Y$.
+
+To see equality, set $X=\R$ and $Y=\Z$, let $\T$~be the topology generated by intervals $(a,b)$ with $a<b$ integers, and let $\T'$~be the standard topology. Then $\T\subset\T'$, but $\T_Y=\T'_Y$ is just the discrete topology on~$\Z$.
+\end{proof}
+
+\exercise{3}
+Consider $Y=[-1,1]$ as a subspace of~$\R$. Then we have the following:
+\begin{center}
+\begin{tabular}{c|c|c}
+Subset&Open in~$Y$&Open in~$\R$\\
+\hline
+$A=\{\,x\mid\tfrac{1}{2}<\abs{x}<1\,\}$&Yes&Yes\\
+$B=\{\,x\mid\tfrac{1}{2}<\abs{x}\le1\,\}$&Yes&No\\
+$C=\{\,x\mid\tfrac{1}{2}\le\abs{x}<1\,\}$&No&No\\
+$D=\{\,x\mid\tfrac{1}{2}\le\abs{x}\le1\,\}$&No&No\\
+$E=\{\,x\mid 0<\abs{x}<1\text{ and }1/x\not\in\Z_+\,\}$&Yes&Yes
+\end{tabular}
+\end{center}
+Note $E=(-1,0)\union\bigl(\,\bigunion_{n\ge1}(\tfrac{1}{n+1},\tfrac{1}{n})\,\bigr)$, a union of open sets in both spaces.
+
+\bigskip
+\exercise{4}
+The projection maps on the product space are open maps (that is, they map open sets to open sets).
+\begin{proof}
+Let $X_1\times X_2$ be a product space and suppose $U\subseteq X_1\times X_2$ is open. If $u\in U$, then by definition there exists some basis element $B_1\times B_2\subseteq X_1\times X_2$, where $B_i$~is open in~$X_i$, and $u\in B_1\times B_2$. Then $\pi_i(u)\in B_i$. Since $u$~was arbitrary, $\pi_i(U)$~can be expressed as a union of open sets in~$X_i$, and hence is open in~$X_i$ as desired.
+\end{proof}
+
+\exercise{6}
+The countable collection
+$$\{\,(a,b)\times(c,d)\mid a<b\text{ and }c<d\text{ rationals}\,\}$$
+is a basis for~$\R^2$.
+\begin{proof}
+Immediate by the density of~$\Q$ in~$\R$ (cf. Exercise~13.8(a)).
+\end{proof}
+
+\exercise{7}
+If $X$~is an ordered set and $Y$~is a proper, convex subset of~$X$, it need not be the case that $Y$~is an interval or ray in~$X$.
+
+Indeed, consider $X=\Q$ and $Y=\{\,q\in\Q\mid q^2<2\,\}$. Then it is immediate that $Y$~is proper and convex in~$X$. But $Y$~is not an interval or a ray in~$X$. Note that $Y$~is bounded in~$X$ by elements not in~$Y$, so it is not a ray. Also it has no least or greatest element, so it is not a closed or half-open interval. If $Y=(a,b)$ for $a,b$ rational, then $b^2\not<2$. But then since $b^2\ne 2$ (no rational has square equal to~$2$), we must have $2<b^2$. Now by computation we can choose $c<b$ with $2<c^2$. But then since $c<b$, $c\in Y$, so $2<c^2<2$---a contradiction. This shows that $Y$~is not an open interval either.
+
+\bigskip
+\exercise{10}
+Let $I=[0,1]$. Let $\T_1$~denote the product topology on~$I\times I$, $\T_2$~denote the dictionary order topology on~$I\times I$, and $\T_3$~denote the subspace topology $I\times I$ inherits from $\R\times\R$ under the dictionary order topology.
+
+Then $\T_3$~is strictly finer than $\T_1$~and~$\T_2$, while $\T_1$~and~$\T_2$ are not comparable.
+\begin{proof}
+Recall that basis elements of~$\T_1$ are interiors of rectangles (with possible edges touching edges of the square), basis elements of~$\T_2$ are open vertical segments in the square (with possible endpoints only at the lower left and upper right corners of the square), and basis elements of~$\T_3$ are restrictions of open vertical segments in~$\R\times\R$ to the square.
+
+It is then immediate that $\T_3$~is finer than both $\T_1$~and~$\T_2$. To see that it is strictly finer, note that $(0\times\tfrac{1}{2},0\times1]$ is a basis element in~$\T_3$, but there are no basis elements of $\T_1$~or~$\T_2$ containing the point~$0\times 1$ and contained in this set.
+
+It is immediate that $\T_1$~is not finer than~$\T_2$. Note that the rectangle $[0,1]\times[0,\tfrac{1}{2})$ is a basis element in~$\T_1$ containing the point $\tfrac{1}{2}\times 0$, but there is no basis element of~$\T_2$ containing this point which is contained in the rectangle. Hence $\T_2$~is not finer than~$\T_1$. Thus $\T_1$~and~$\T_2$ are not comparable.
+\end{proof}
+\end{document}
